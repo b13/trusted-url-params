@@ -1,15 +1,15 @@
-# Trusted URL Params - A TYPO3 Extension to generate safe URLs
+# Trusted URL Params - A TYPO3 extension to generate safe URLs
 
-This TYPO3 Extension modifies the generation of links to TYPO3 pages to only include the current query
+This TYPO3 extension modifies the generation of links to TYPO3 pages to only include the current query
 parameters (`$_GET`) that have been resolved by TYPO3's Routing.
 
 ## Background
 
-TYPO3's `typolink` functionality is super-powerful, but also drags a lot of history with it. Various issues
+TYPO3's `typolink` functionality is super-powerful but also drags a lot of history with it. Various issues
 have been addressed with TYPO3's Routing, which was introduced in TYPO3 v9.
 
 However, one main issue still resolves: The usage of the option `addQueryString` of `typolink`.
-If used, the option adds *any* existing `$_GET` parameter to the generated URL, and - in the worst case -
+If used, the option adds *any* existing `$_GET` parameter to the generated URL and - in the worst case -
 generates a valid cHash for this link.
 
 `addQueryString` allows to define an exclude list of GET parameters, however this issue
@@ -18,8 +18,8 @@ we already have an "allow list" of the current request - all GET parameters or a
 have been found in the route path ("route arguments"). This is a much better way to generate
 the "addQueryString" logic than using the plain `$_GET` array.
 
-Since TYPO3 v9, this issue have become more visible as the commonly used `seo` extension
-uses `addQueryString` for generating the canonical tag, or the language menu.
+Since TYPO3 v9, this issue has become more visible as the commonly used `seo` extension
+uses `addQueryString` to generate the canonical tag, or the language menu.
 
 ## How we fixed it
 
@@ -30,7 +30,7 @@ flag.
 ## When to use this extension
 
 We recommend using this extension
-* if you have trouble with SEO campaigns, and an invalid canonical tag
+* if you have trouble with SEO campaigns and an invalid canonical tag
 * or if (valid) bots taking the
 * and if you know you don't misuse "addQueryString" in any other places such as your own TypoScript or third-party extensions
 
@@ -50,8 +50,8 @@ added as GET parameters (such as query strings from SolR).
 
 ### Possible side effects
 
-As we believe in the concept of a "allow list", we further want to extend this configuration to
-also allow regular query parameters if configured in e.g. a site configuration to also allow proper
+As we believe in the concept of an "allow list", we further want to extend this configuration to
+allow regular query parameters if configured in e.g. a site configuration to allow proper
 pagination links, which might be an issue.
 
 ## Inspiration
