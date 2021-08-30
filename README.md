@@ -31,7 +31,7 @@ flag.
 
 We recommend using this extension
 * if you have trouble with SEO campaigns and an invalid canonical tag
-* or if (valid) bots taking the
+* or if (valid) bots taking crazy links and fill your cache backends or eat up your server resources
 * and if you know you don't misuse "addQueryString" in any other places such as your own TypoScript or third-party extensions
 
 
