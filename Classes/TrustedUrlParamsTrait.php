@@ -12,6 +12,7 @@ namespace B13\TrustedUrlParams;
  */
 
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
@@ -37,9 +38,51 @@ trait TrustedUrlParamsTrait
             $excludeString = str_replace(',', '&', $conf['exclude']);
             $excludedQueryParts = [];
             parse_str($excludeString, $excludedQueryParts);
-            $allowedQueryArguments = ArrayUtility::arrayDiffKeyRecursive($allowedQueryArguments, $excludedQueryParts);
+            $allowedQueryArguments = $this->arrayDiffKeyRecursiveWrapper($allowedQueryArguments, $excludedQueryParts);
         }
 
         return !empty($allowedQueryArguments) ? HttpUtility::buildQueryString($allowedQueryArguments, '&') : '';
+    }
+
+    /**
+     * Can be replaced by ArrayUtility::arrayDiffKeyRecursive() once we drop v9.5 support.
+     * @param array $array1
+     * @param array $array2
+     * @return array
+     */
+    private function arrayDiffKeyRecursiveWrapper(array $array1, array $array2): array
+    {
+        if ((new Typo3Version())->getMajorVersion() < 10) {
+            return $this->arrayDiffKeyRecursive($array1, $array2);
+        }
+        return ArrayUtility::arrayDiffAssocRecursive($array1, $array2);
+    }
+
+    /**
+     * Can be replaced by ArrayUtility::arrayDiffKeyRecursive() once we drop v9.5 support.
+     *
+     * Filters keys off from first array that also exist in second array. Comparison is done by keys.
+     * This method is a recursive version of php array_diff_key()
+     *
+     * @param array $array1 Source array
+     * @param array $array2 Reduce source array by this array
+     * @return array Source array reduced by keys also present in second array
+     */
+    private function arrayDiffKeyRecursive(array $array1, array $array2): array
+    {
+        $differenceArray = [];
+        foreach ($array1 as $key => $value) {
+            if (!array_key_exists($key, $array2)) {
+                $differenceArray[$key] = $value;
+            } elseif (is_array($value)) {
+                if (is_array($array2[$key])) {
+                    $recursiveResult = $this->arrayDiffKeyRecursive($value, $array2[$key]);
+                    if (!empty($recursiveResult)) {
+                        $differenceArray[$key] = $recursiveResult;
+                    }
+                }
+            }
+        }
+        return $differenceArray;
     }
 }
