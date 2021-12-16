@@ -34,6 +34,8 @@ We recommend using this extension
 * or if (valid) bots taking crazy links and fill your cache backends or eat up your server resources
 * and if you know you don't misuse "addQueryString" in any other places such as your own TypoScript or third-party extensions
 
+Please read https://typo3.org/security/advisory/typo3-psa-2021-003 for more details.
+
 
 ## Installation
 
@@ -57,6 +59,7 @@ pagination links, which might be an issue.
 ## Inspiration
 
 * TYPO3 Core v9 Routing (Thanks to Oliver Hader and Benni Mack)
+* Helmut Hummel (original idea on how to solve it "the core way")
 * Extension ["urlguard"](https://github.com/sourcebroker/urlguard) (Thanks to Krystian Szymukowicz from SourceBroker)
 * Extension ["urlguard2"](https://github.com/studiomitte/urlguard2) (Thanks to Georg Ringer from Studio Mitte)
 * Extension ["seo-canonical-guard"](https://github.com/wazum/seo-canonical-guard)
