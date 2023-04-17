@@ -36,6 +36,13 @@ We recommend using this extension
 
 Please read https://typo3.org/security/advisory/typo3-psa-2021-003 for more details.
 
+## TYPO3 v12
+TYPO3 v12 finally enforces addQueryString to only allow "trusted" URL Parameters
+making this extension obsolete, however the extension continues to be compatible
+with TYPO3 v12 when extension use legacy functionality.
+
+See https://review.typo3.org/c/Packages/TYPO3.CMS/+/75864 for the related
+core change.
 
 ## Installation
 
